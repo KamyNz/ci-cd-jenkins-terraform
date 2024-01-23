@@ -12,17 +12,25 @@ node ('terraform') {
       //bat 'dir' When windows
     }
 
-    stage('Init'){
-      sh 'terraform init'
-    }
+    withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding',
+                      credentialsId : 'aws_credentials',
+                      accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                      secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+    ]]) {
 
-    stage('Validate'){
-      sh '''terraform fmt
+      stage('Init'){
+        sh 'terraform init'
+      }
+
+      stage('Validate'){
+        sh '''terraform fmt
             terraform validate'''
-    }
+      }
 
-    stage('Plan'){
-      sh 'terraform plan -out tfplan'
+      stage('Plan'){
+        sh 'terraform plan -out tfplan'
+      }
+
     }
 
   }
