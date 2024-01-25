@@ -4,8 +4,9 @@ node ('terraform') {
   err = null
   try{
     stage('Checkout'){
+      echo "${params}"
       gitscmvar=checkout scmGit(
-      branches: [[name: '*/main']], extensions: [],
+      branches: [[name: params.branch_name]], extensions: [],
       userRemoteConfigs: [[credentialsId: 'git-token', url: 'https://github.com/KamyNz/ci-cd-jenkins-terraform.git']])
 
       sh 'ls -l'  //bat 'dir' When windows
