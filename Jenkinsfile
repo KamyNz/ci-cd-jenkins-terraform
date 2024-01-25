@@ -31,6 +31,10 @@ node ('terraform') {
         sh 'terraform plan -out tfplan'
       }
 
+      stage('Apply'){
+        sh 'terraform apply tfplan'
+      }
+
     }
 
   }
