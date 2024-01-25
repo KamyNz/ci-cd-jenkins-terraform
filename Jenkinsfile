@@ -4,13 +4,14 @@ node ('terraform') {
   err = null
   try{
     stage('Checkout'){
-      checkout scmGit(
+      gitscmvar=checkout scmGit(
       branches: [[name: '*/main']], extensions: [],
       userRemoteConfigs: [[credentialsId: 'git-token', url: 'https://github.com/KamyNz/ci-cd-jenkins-terraform.git']])
 
-      sh 'ls -l'
-      //bat 'dir' When windows
+      sh 'ls -l'  //bat 'dir' When windows
+      echo gitscmvar
     }
+    branch='main'
 
     withCredentials([[ $class: 'AmazonWebServicesCredentialsBinding',
                       credentialsId : 'aws_credentials',
@@ -32,9 +33,9 @@ node ('terraform') {
       }
 
       stage('Apply'){
-        when(BRANCH_NAME == 'main'){
+        when(branch == 'main'){
           sh 'terraform apply tfplan'
-        }
+      }
 
       }
 
