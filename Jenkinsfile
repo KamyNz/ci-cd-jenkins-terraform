@@ -9,7 +9,7 @@ node ('terraform') {
       userRemoteConfigs: [[credentialsId: 'git-token', url: 'https://github.com/KamyNz/ci-cd-jenkins-terraform.git']])
 
       sh 'ls -l'  //bat 'dir' When windows
-      echo gitscmvar
+      echo "${gitscmvar}"
     }
     branch='main'
 
