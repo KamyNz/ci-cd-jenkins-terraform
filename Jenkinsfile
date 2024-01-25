@@ -32,7 +32,10 @@ node ('terraform') {
       }
 
       stage('Apply'){
-        sh 'terraform apply tfplan'
+        when(BRANCH_NAME == 'main'){
+          sh 'terraform apply tfplan'
+        }
+
       }
 
     }
