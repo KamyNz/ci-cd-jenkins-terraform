@@ -13,15 +13,36 @@ jobs:
     runs-on: ubuntu-latest
     name: "tf Workflow" #job name
 
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - run: |
+      - name: Run shell commands
+        run: |
           ls -l
           echo $PATH
           env | sort
           aws --version
+
+      - name: Init
+        run: |
+          terraform init
+
+      - name: Plan
+        run: |
+            terraform plan -out tfplan
+
+      - name: Apply
+        if: ${{ env.GITHUB_REF_NAME == "test"}}
+        run: |
+            terraform apply tfplan
+
+
+
 
 
 
