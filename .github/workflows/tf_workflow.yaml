@@ -1,0 +1,28 @@
+#Trigger
+on:
+  push:
+
+#Defaults of workflow for each run, will use bash shell
+defaults:
+  run:
+    shell: bash
+
+#Naming job
+jobs:
+  tf_workflow: #job id
+    runs-on: ubuntu-latest
+    name: "tf Workflow" #job name
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1
+
+      - run: |
+          ls -l
+          echo $PATH
+          env | sort
+          aws --version
+
+
+
+
