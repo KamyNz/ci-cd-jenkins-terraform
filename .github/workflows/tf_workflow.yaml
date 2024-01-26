@@ -37,7 +37,7 @@ jobs:
             terraform plan -out tfplan
 
       - name: Apply
-        if: ${{ env.GITHUB_REF_NAME == "test"}}
+        if: ${{ env.GITHUB_REF_NAME == 'test' }}
         run: |
             terraform apply tfplan
 
